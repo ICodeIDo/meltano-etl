@@ -1,0 +1,28 @@
+version: 1
+default_environment: dev
+project_id: 99237d99-3f92-4f5a-8126-0377a797e893
+
+environments:
+- name: dev
+- name: staging
+- name: prod
+
+plugins:
+  extractors:
+  - name: tap-github
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/tap-github.git
+    config:
+      repositories:
+      - sbalnojan/meltano-lightdash
+      start_date: '2024-01-01'
+      
+    select:
+    - commits.url
+    - commits.sha
+    - commits.commit_timestamp
+
+  loaders:
+  - name: target-jsonl
+    variant: andyh1203
+    pip_url: target-jsonl
